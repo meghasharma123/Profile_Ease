@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header class="container my-3 text-center text-light rounded p-3"
+        style="background-color: rgba(0, 143, 143, 0.678);">
+
+        <h1>Weather-App</h1>
+
+    </header>
+
+    <div class="row w-75 mx-auto  p-3" style="justify-content: space-around;">
+        <div class="col-md-3 p-2">
+            <div class="loc p-2 my-2" style="background-color:rgba(0, 143, 143, 0.678) ;"></div>
+            <div class="others p-2" style="background-color:rgba(0, 143, 143, 0.678) ;"></div>
+        </div>
+        <div class="col-md-6 p-2" style="background-color:rgba(0, 143, 143, 0.678) ;">
+            <div class="details bg-warning"></div>
+            <div class="temp w-75 bg-light mx-auto p-1"
+                style="display: flex; align-items: center; justify-content: space-between;">
+
+            </div>
+            <div class=" w-75 bg-light mx-auto p-3 m-3"
+                style="display: flex; align-items: center; justify-content: space-between;">
+                <i class="vis"> </i>
+                <i class="uvi"> </i>
+            </div>
+            <div class=" w-75 bg-light mx-auto p-3 m-3"
+                style="display: flex; align-items: center; justify-content: space-between;">
+                <i class="pres"> </i>
+
+            </div>
+            <div class=" w-75 bg-light mx-auto p-3 m-3"
+                style="display: flex; align-items: center; justify-content: space-between;">
+                <i class="wind"> </i>
+                <i class="speed"> </i>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="curve_chart" class="my-5 mx-auto" style="width: 900px; height: 500px">.</div>
+
+
+
+
+</body>
+
+<script src="app.js"></script>
+
+</html>
