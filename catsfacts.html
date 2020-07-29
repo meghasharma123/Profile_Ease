@@ -3,19 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cat Facts</title>
-</head>
-<body>
-    <h1> Cat Fact Generator</h1>
-    <button type="button" id="generate" >Generate</button>
-    <div class="facts"></div>
-
-    <script>
-        document.getElementById('generate').addEventListener('click',getFact);
-        function getFact(e){
-            e.preventDefault();
-            fetch('')
+    <title>Cat Img Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        .show{
+            width:30%;
         }
+    </style>
+</head>
+<body class='text-center'>
+    <h1>Cat Pic Generator</h1>
+    <br>
+    <button id="generate" class="catImg btn btn-primary">Generate Pic</button>
+    <div id="output" class="my-4"></div><br>
+
+    <script type="text/javascript">
+    document.getElementById('generate').addEventListener('click',fetchPics);
+    function fetchPics(){
+        fetch('https://api.thecatapi.com/v1/images/search')
+        .then((res) => res.json())
+        .then((data) =>{
+            let catImgUrl = data[0].url;
+            let catImg = document.createElement('img');
+            catImg.setAttribute('src',`${catImgUrl}`);
+            catImg.classList.add('.show');
+            document.querySelector('#output').appendChild(catImg);
+        })
+    }
     </script>
 </body>
 </html>
