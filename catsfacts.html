@@ -14,7 +14,12 @@
         document.getElementById('generate').addEventListener('click',getFact);
         function getFact(e){
             e.preventDefault();
-            fetch('')
+            fetch('https://cat-fact.herokuapp.com/facts/random')
+            .then((res) => res.json())
+            .then((data) => {
+                let output = `<p>${data[0]}</p>`
+                document.querySelector('.facts').innerHTML = output;
+            })
         }
     </script>
 </body>
