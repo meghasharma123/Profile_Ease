@@ -92,7 +92,8 @@
                 
             }
             let res = fetch('https://api.line.me/v2/profile',fetchoptions);
-            return res.json();
+            
+            return res
         }
         console.log(fetchdata(Client_ID,Client_secret,code,redirect_uri,grant_type,access_token));
     </script>
