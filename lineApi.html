@@ -12,36 +12,18 @@
     <div id="output"></div>
 
     <script>
-         document.getElementById('generate').addEventListener('click',generate);
-         var Client_ID = '1654645518';
+            var Client_ID = '1654645518';
             var Client_secret = '654de9204e47f9442567599eaf721ff0';
             var code = '1Jyj6DluPDPvdbxs80oO';
             var redirect_uri = 'https%3A%2F%2Ffatmab2809.github.io%2FDemo1%2F';
             var grant_type = 'authorization_code';
             var access_token = 'eyJhbGciOiJIUzI1NiJ9.16SWEDOu7A4V-xLAcyOK4WPI4c8_hXIv66ZUZrK7vQhwEXedRN8PkaaRgsZxOsPdP1vNg4W27KRk3nrsI0HMIyQnu7uYs9dXFOcV9gVhhbK3HFUfvhKni-7o1l29cdc6DdTII6dN-LZLseSwyJUpXI-3XcuuAhYY8H-i4vtNSpk.4chO4Gzey6v2DnJvpC_oA2u6OeSD1kAjTkql6yFtces';
-           
+            document.getElementById('generate').addEventListener('click',generate);
         async function generate(e){
            e.preventDefault();
 
-            //constant variables
-            //fetch access token
-            // fetch( ('https://cors-anywhere.herokuapp.com/'+'https://api.line.me/v2/oauth/accessToken') , {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/x-www-form-urlencoded',
-            //         },
-            //     body: JSON.stringify({
-            //         grant_type : grant_type,
-            //          code: code,
-            //         redirect_uri : redirect_uri,
-            //         client_id : Client_ID,
-            //         client_secret : Client_secret
-                                    
-            //     })
-            // })
-
-            //refresh access token
-            let response = await fetch('https://api.line.me/oauth2/v2.1/token',{
+            //refresh access token    
+            await fetch('https://api.line.me/oauth2/v2.1/token',{
                 method:'POST',
                 headers:{
                     'Content-Type':' application/x-www-form-urlencoded'
@@ -52,50 +34,41 @@
                     client_id : Client_ID,
                     client_secret : Client_secret
                 })
-            });
-            // .then((response) => console.log(response.json()))
-                console.log('Access token');      
-                console.log(response.json());        //convert response to promise by using .json()
-            // .catch((err) => console.log(err));
+            })
+            .then((res) => res.json())          //convert response to promise by using .json()
+            .then((data) => {
+                console.log(data);
+                // access_token = data.access_token;
+            })
+            .catch((err) => console.log(err));
 
             //fetch user profile data
-            let response2 = await fetch('https://api.line.me/v2/profile',{
-                method: 'GET',
-                headers: {
-                    'Content-Type' : 'application/json',
-                    'Authorization':' Bearer eyJhbGciOiJIUzI1NiJ9.16SWEDOu7A4V-xLAcyOK4WPI4c8_hXIv66ZUZrK7vQhwEXedRN8PkaaRgsZxOsPdP1vNg4W27KRk3nrsI0HMIyQnu7uYs9dXFOcV9gVhhbK3HFUfvhKni-7o1l29cdc6DdTII6dN-LZLseSwyJUpXI-3XcuuAhYY8H-i4vtNSpk.4chO4Gzey6v2DnJvpC_oA2u6OeSD1kAjTkql6yFtces'
-                }
-            });
-            // .then((res) => {
-            //     console.log(res.json());
-            //    //console.log(access_token);
-            //     })
-            // .then((data) => {
-            //     // access_token=`${data.access_token}`;
-            //     console.log(data);
-            // //     console.log(res.userId);
-            // //    console.log(res.displayName);
-            // // document.getElementById('output').innerHTML = `User Profile${data.userId} ${data.displayName}`;
-            // })
-            // .catch((err) => console.log(err));
-                    console.log('User Profile');
-                    console.log(response2.json());  
-        }
-        
-        function fetchdata(Client_ID,Client_secret,code,redirect_uri,grant_type,access_token){
-            const fetchoptions= {
+        console.log('User Profile');
+        // console.log(fetchdata(Client_ID,Client_secret,code,redirect_uri,grant_type,access_token));
+        let promise = fetchdata(Client_ID,Client_secret,code,redirect_uri,grant_type,access_token);
+    }
+    
+        async function fetchdata(Client_ID,Client_secret,code,redirect_uri,grant_type,access_token){
+           await fetch('https://api.line.me/v2/profile',{
                 method: 'GET',
                 headers: {
                     'Content-Type' : 'application/json',
                     'Authorization': 'Bearer '+ access_token
                 }
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data.displayName);
+                console.log(data.userId);
+                var output = `<p>User Name- ${data.displayName} </p><br>
+                                <p>User Id- ${data.userId}</p>`;
+                document.getElementById('output').innerHtml += output;
+                })
                 
-            }
-            let res = fetch('https://api.line.me/v2/profile',fetchoptions);
-            
-            return res
+            .catch((err) => console.log(err));
+           
         }
-        console.log(fetchdata(Client_ID,Client_secret,code,redirect_uri,grant_type,access_token));
+        
     </script>
 </body>
 </html>
