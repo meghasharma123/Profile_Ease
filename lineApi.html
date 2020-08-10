@@ -5,11 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LINE API</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        .show{
+            width:30%;
+        }
+    </style>
 </head>
 <body>
     <h1>LINE API</h1>
     <button type="button" id="generate">Generate data</button>
-    <div id="output"></div>
+    <div id="output" ></div>
 
     <script>
             var Client_ID = '1654645518';
@@ -19,6 +24,7 @@
             var grant_type = 'authorization_code';
             var access_token = 'eyJhbGciOiJIUzI1NiJ9.16SWEDOu7A4V-xLAcyOK4WPI4c8_hXIv66ZUZrK7vQhwEXedRN8PkaaRgsZxOsPdP1vNg4W27KRk3nrsI0HMIyQnu7uYs9dXFOcV9gVhhbK3HFUfvhKni-7o1l29cdc6DdTII6dN-LZLseSwyJUpXI-3XcuuAhYY8H-i4vtNSpk.4chO4Gzey6v2DnJvpC_oA2u6OeSD1kAjTkql6yFtces';
             document.getElementById('generate').addEventListener('click',generate);
+
         async function generate(e){
            e.preventDefault();
 
@@ -43,10 +49,9 @@
             .catch((err) => console.log(err));
 
             //fetch user profile data
-        console.log('User Profile');
-        // console.log(fetchdata(Client_ID,Client_secret,code,redirect_uri,grant_type,access_token));
-        let promise = fetchdata(Client_ID,Client_secret,code,redirect_uri,grant_type,access_token);
-    }
+            // console.log('User Profile');
+            let promise = fetchdata(Client_ID,Client_secret,code,redirect_uri,grant_type,access_token);
+        }
     
         async function fetchdata(Client_ID,Client_secret,code,redirect_uri,grant_type,access_token){
            await fetch('https://api.line.me/v2/profile',{
@@ -58,11 +63,21 @@
             })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data.displayName);
-                console.log(data.userId);
                 var output = `<p>User Name- ${data.displayName} </p><br>
-                                <p>User Id- ${data.userId}</p>`;
-                document.getElementById('output').innerHtml += output;
+                                <p>User Id- ${data.userId}</p><br>`;
+                if(data.statusMessage == 'undefined'){
+                    output +=`<p>Status Message- ${data.statusMessage}</p>`;
+                }
+                document.getElementById('output').innerHTML += output;
+                let imgurl = data.pictureUrl;
+                if(imgurl === 'undefined'){
+                    let Img = document.createElement('img');
+                    Img.setAttribute('src',`${imgurl}`);
+                    Img.classList.add('.show');
+                    document.querySelector('#output').appendChild(Img);
+               
+                }
+                
                 })
                 
             .catch((err) => console.log(err));
