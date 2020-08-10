@@ -65,12 +65,12 @@
             .then((data) => {
                 var output = `<p>User Name- ${data.displayName} </p><br>
                                 <p>User Id- ${data.userId}</p><br>`;
-                if(data.statusMessage == 'undefined'){
+                if(data.statusMessage){
                     output +=`<p>Status Message- ${data.statusMessage}</p>`;
                 }
                 document.getElementById('output').innerHTML += output;
                 let imgurl = data.pictureUrl;
-                if(imgurl === 'undefined'){
+                if(imgurl){
                     let Img = document.createElement('img');
                     Img.setAttribute('src',`${imgurl}`);
                     Img.classList.add('.show');
