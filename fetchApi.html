@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Joke Generator</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body class="text-center">
+    <h1>Joke Generator</h1>
+    <button type="submit" class="btn btn-primary my-4" id="button">Generate Joke</button>
+    <div class="display"></div>
+
+    <script type="text/javascript">
+        document.getElementById('button').addEventListener('click',generate);
+        async function generate(e)
+        {
+            document.querySelector('.display').innerHTML = `Loading...`;
+            e.preventDefault();
+            fetch('https://sv443.net/jokeapi/v2/joke/Any')
+            .then((response) => response.json())
+            .then((response) => {
+                    let responseJoke;
+                    if(response.joke)
+                        responseJoke = response.joke;
+                    else
+                        responseJoke = `${response.setup} ${response.delivery}`;
+
+                 document.querySelector('.display').innerHTML = responseJoke;
+            }).catch(err =>console.log(err))
+              
+        }
+    </script>
+</body>
+</html>
