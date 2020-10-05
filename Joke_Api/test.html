@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Profile Ease</title> <!-- Title of the Webpage. Edit to Change -->
+	<style type="text/css">  /*Just some CSS for Styling*/
+		.ShowJokeHere {
+			font-weight: bold;
+			font-size: 25px;
+			margin-top: 15px;
+		}
+	</style>
+</head>
+<body>
+	<center>
+		<h1> Joke Getting APP</h1>
+		<button type="submit" id="getJoke"> Click Me to get a Joke from Internet</button>
+	<div class="ShowJokeHere"> </div>
+	</center>
+	
+
+<script type="text/javascript">
+
+document.getElementById("getJoke").addEventListener("click", getMyJoke); /*Check if Button is clicked or not*/
+
+	//Async Function getMyJoke to make API Call
+	async function getMyJoke(e) { 
+		document.querySelector('.ShowJokeHere').innerHTML = `Loading...`; // Our Previous joke is reset
+		e.preventDefault(); // To prevent browser from reloading automatically when button is clicked.
+		
+		//change below URL to your API URL
+		let url = 'https://sv443.net/jokeapi/v2/joke/Any';
+		fetch(url) //Send request to given URL
+			.then(response => response.json()) //get back data from Server & convert to JSON
+				.then(response => {
+					let ResponseJoke; 
+					if(response.joke) { 
+					//Check if response contains a single joke or in 2 parts having setup & delivery and assign ResponseJoke variable its value
+						ResponseJoke = response.joke; 
+					}
+					else {
+						ResponseJoke = `${response.setup} ${response.delivery}`;
+					}
+					//use document.querySelector to find the div and add Joke to it.
+					document.querySelector('.ShowJokeHere').innerHTML = ResponseJoke;
+				})
+			}
+</script>
+
+</body>
+</html>
